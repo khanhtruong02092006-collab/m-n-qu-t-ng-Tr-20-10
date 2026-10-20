@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Món Quà Nhỏ Dành Tặng Trà Iu 💕 - 20/10</title>
+    
+    <!-- Nhúng Google Fonts hỗ trợ tiếng Việt có dấu tuyệt đẹp -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. TÙY CHỈNH MÀU SẮC CHỦ ĐẠO TẠI ĐÂY (CSS VARIABLES)
+           Bạn có thể đổi mã màu HEX bên dưới nếu muốn thay đổi tone màu của trang
+           ========================================================================== */
+        :root {
+            --bg-gradient-1: #ffe5ec;       /* Màu nền hồng phấn nhạt */
+            --bg-gradient-2: #fff8fa;       /* Màu nền trắng hồng */
+            --primary-pink: #ff8fa3;        /* Màu hồng pastel chủ đạo */
+            --soft-red: #ff4d6d;            /* Màu đỏ nhạt làm điểm nhấn */
+            --dark-red: #c9184a;            /* Màu đỏ đậm khi hover */
+            --envelope-body: #ff758f;       /* Màu thân phong bì */
+            --envelope-flap: #ff4d6d;       /* Màu nắp phong bì */
+            --envelope-pocket: #ff8fa3;     /* Màu túi trước phong bì */
+            --card-bg: #ffffff;             /* Màu nền tấm thiệp */
+            --text-main: #590d22;           /* Màu chữ chính (đỏ nâu trầm ấm) */
+            --font-script: 'Dancing Script', cursive;
+            --font-body: 'Quicksand', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at center, var(--bg-gradient-2) 0%, var(--bg-gradient-1) 100%);
+            font-family: var(--font-body);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            user-select: none;
+        }
+
+        /* ==========================================================================
+           2. HIỆU ỨNG CÁNH HOA HỒNG RƠI (BACKGROUND PETALS)
+           ========================================================================== */
+        #petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            top: -10%;
+            background: linear-gradient(135deg, #ff4d6d 0%, #ff8fa3 60%, #ffb3c1 100%);
+            border-radius: 150% 0 150% 0;
+            opacity: 0.75;
+            box-shadow: 0 2px 5px rgba(255, 77, 109, 0.15);
+            animation: fall linear infinite, sway ease-in-out infinite alternate;
+        }
+
+        @keyframes fall {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(0px) rotate(0deg); }
+            100% { transform: translateX(80px) rotate(220deg); }
+        }
+
+        /* ==========================================================================
+           3. PHONG BÌ & BÓ HOA Ở GIỮA MÀN HÌNH (TRẠNG THÁI BAN ĐẦU)
+           ========================================================================== */
+        .stage {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            animation: floatEnvelope 3s ease-in-out infinite;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: scale(1.04);
+        }
+
+        @keyframes floatEnvelope {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-14px); }
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: var(--envelope-body);
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.28);
+        }
+
+        /* Nắp phong bì */
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 115px solid var(--envelope-flap);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s;
+            z-index: 5;
+            filter: drop-shadow(0 4px 6px rgba(89, 13, 34, 0.15));
+        }
+
+        /* Thân trước phong bì */
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid var(--envelope-pocket);
+            border-right: 150px solid var(--envelope-pocket);
+            border-bottom: 105px solid var(--primary-pink);
+            border-top: 95px solid transparent;
+            border-radius: 0 0 16px 16px;
+            z-index: 4;
+        }
+
+        /* Tấm thiệp nhỏ nhô lên từ phong bì */
+        .mini-letter {
+            position: absolute;
+            bottom: 10px;
+            left: 18px;
+            width: 264px;
+            height: 170px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            z-index: 2;
+            transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Con dấu sáp hình trái tim & Hoa ở giữa phong bì */
+        .wax-seal {
+            position: absolute;
+            top: 85px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            background: radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
+            border-radius: 50%;
+            z-index: 6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 16px rgba(201, 24, 74, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+            border: 2px dashed rgba(255, 255, 255, 0.6);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            animation: pulseSeal 1.8s infinite;
+        }
+
+        @keyframes pulseSeal {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.6); }
+            70% { box-shadow: 0 0 0 16px rgba(255, 77, 109, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0); }
+        }
+
+        /* Trạng thái khi phong bì mở */
+        .envelope-wrapper.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .wax-seal {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+
+        .envelope-wrapper.open .mini-letter {
+            transform: translateY(-95px);
+        }
+
+        .envelope-wrapper.fade-out {
+            opacity: 0;
+            transform: scale(0.8) translateY(60px);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* Dòng chữ nhấp nháy nhắc chạm */
+        .prompt-text {
+            margin-top: 38px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--soft-red);
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(255, 77, 109, 0.25);
+            animation: blinkText 1.6s ease-in-out infinite;
+            transition: opacity 0.4s ease;
+        }
+
+        @keyframes blinkText {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(0.96); }
+        }
+
+        /* ==========================================================================
+           4. THIỆP CHÚC MỪNG CHÍNH (HIỆN RA SAU KHI MỞ PHONG BÌ)
+           ========================================================================== */
+        .greeting-card {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 143, 163, 0.4);
+            border-radius: 28px;
+            padding: 32px 28px;
+            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.2), 0 0 0 8px rgba(255, 255, 255, 0.4);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            display: none;
+            z-index: 20;
+        }
+
+        .greeting-card.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .bouquet-header {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 10px;
+            animation: gentleBob 3s ease-in-out infinite;
+        }
+
+        @keyframes gentleBob {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
+        }
+
+        .card-date-badge {
+            display: inline-block;
+            background: #ffe5ec;
+            color: var(--soft-red);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 5px 16px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .card-title {
+            font-family: var(--font-script);
+            font-size: 2.5rem;
+            color: var(--soft-red);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .card-message-box {
+            min-height: 145px;
+            background: #fff9fb;
+            border-radius: 18px;
+            padding: 18px 20px;
+            border: 1px dashed #ffb3c1;
+            text-align: left;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--text-main);
+            font-weight: 600;
+            margin-bottom: 18px;
+            position: relative;
+            white-space: pre-line;
+        }
+
+        /* Con trỏ nhấp nháy của hiệu ứng gõ chữ */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background-color: var(--soft-red);
+            vertical-align: middle;
+            margin-left: 3px;
+            animation: blinkCursor 0.75s infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .card-signature {
+            font-family: var(--font-script);
+            font-size: 1.6rem;
+            color: var(--dark-red);
+            text-align: right;
+            margin-bottom: 22px;
+            padding-right: 10px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.6s ease;
+        }
+
+        .card-signature.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           5. NÚT BẤM TƯƠNG TÁC "CHẠY TRỐN"
+           ========================================================================== */
+        .btn-container {
+            min-height: 54px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .btn-container.show {
+            opacity: 1;
+        }
+
+        .gift-btn {
+            background: linear-gradient(135deg, var(--soft-red), var(--primary-pink));
+            color: #fff;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 14px 26px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.35);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, left 0.28s ease, top 0.28s ease;
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        .gift-btn:hover {
+            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .gift-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ==========================================================================
+           6. MODAL NHẬN QUÀ THỰC TẾ (HIỆN RA KHI BẮT ĐƯỢC NÚT)
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(89, 13, 34, 0.45);
+            backdrop-filter: blur(6px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 26px;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(89, 13, 34, 0.25);
+            border: 3px solid var(--primary-pink);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.show .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: bounceGift 1.2s infinite;
+        }
+
+        @keyframes bounceGift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .modal-title {
+            font-family: var(--font-script);
+            font-size: 2.2rem;
+            color: var(--soft-red);
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 1.02rem;
+            line-height: 1.65;
+            color: var(--text-main);
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: #fff0f3;
+            padding: 16px;
+            border-radius: 16px;
+        }
+
+        .close-modal-btn {
+            background: var(--soft-red);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        /* Nút bật/tắt nhạc nền ở góc trên bên phải */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid var(--primary-pink);
+            color: var(--soft-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 150;
+            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .music-toggle.playing {
+            animation: spinRecord 4s linear infinite;
+        }
+
+        @keyframes spinRecord {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive cho màn hình điện thoại nhỏ */
+        @media (max-width: 480px) {
+            .envelope {
+                width: 260px;
+                height: 175px;
+            }
+            .flap {
+                border-left: 130px solid transparent;
+                border-right: 130px solid transparent;
+                border-top: 100px solid var(--envelope-flap);
+            }
+            .pocket {
+                border-left: 130px solid var(--envelope-pocket);
+                border-right: 130px solid var(--envelope-pocket);
+                border-bottom: 90px solid var(--primary-pink);
+                border-top: 85px solid transparent;
+            }
+            .mini-letter {
+                width: 228px;
+                height: 145px;
+                left: 16px;
+            }
+            .wax-seal {
+                top: 75px;
+                width: 56px;
+                height: 56px;
+            }
+            .card-title {
+                font-size: 2.1rem;
+            }
+            .greeting-card {
+                padding: 24px 18px;
+            }
+            .card-message-box {
+                font-size: 0.96rem;
+                padding: 15px;
+            }
+            .gift-btn {
+                font-size: 0.92rem;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================================================
+         7. CHÈN NHẠC NỀN TẠI ĐÂY (TÙY CHỌN)
+         Thay đường dẫn trong thuộc tính src="" bằng link file nhạc .mp3 của bạn
+         (Ví dụ: tạo file music.mp3 cùng thư mục với index.html rồi điền src="music.mp3")
+         ========================================================================== -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Nút điều khiển nhạc ở góc màn hình -->
+    <button class="music-toggle" id="music-btn" title="Bật/Tắt nhạc nền">🎵</button>
+
+    <!-- Container chứa hiệu ứng cánh hoa rơi -->
+    <div id="petals-container"></div>
+
+    <!-- Sân khấu chính ở giữa màn hình -->
+    <div class="stage">
+        
+        <!-- PHONG BÌ THƯ BAN ĐẦU -->
+        <div class="envelope-wrapper" id="envelope-trigger">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="pocket"></div>
+                
+                <!-- Tấm thiệp nhỏ lấp ló bên trong -->
+                <div class="mini-letter">
+                    <span style="font-family: var(--font-script); font-size: 1.5rem; color: var(--soft-red);">
+                        For Trà iu 💕
+                    </span>
+                </div>
+
+                <!-- Con dấu sáp hình bông hoa & trái tim -->
+                <div class="wax-seal">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="prompt-text" id="prompt-text">✨ Trà ơi, chạm vào đây nhé! ✨</p>
+        </div>
+
+        <!-- TẤM THIỆP CHÍNH (Hiện ra sau khi mở phong bì) -->
+        <div class="greeting-card" id="greeting-card">
+            <!-- Bó hoa SVG trang trí đầu tấm thiệp -->
+            <div class="bouquet-header">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Giấy gói hoa -->
+                    <path d="M35 65L60 110L85 65H35Z" fill="#FFC2D1" stroke="#FF8FA3" stroke-width="2"/>
+                    <path d="M25 55L60 105L95 55L75 45H45L25 55Z" fill="#FFE5EC" stroke="#FF8FA3" stroke-width="2"/>
+                    <!-- Lá cây -->
+                    <path d="M40 50C30 40 20 45 25 30C35 25 45 35 45 45" fill="#70E000" opacity="0.7"/>
+                    <path d="M80 50C90 40 100 45 95 30C85 25 75 35 75 45" fill="#70E000" opacity="0.7"/>
+                    <!-- Những bông hoa hồng -->
+                    <circle cx="45" cy="42" r="14" fill="#FF758F"/>
+                    <circle cx="75" cy="42" r="14" fill="#FF758F"/>
+                    <circle cx="60" cy="30" r="16" fill="#FF4D6D"/>
+                    <circle cx="60" cy="48" r="15" fill="#FF4D6D"/>
+                    <!-- Nhụy hoa xoắn -->
+                    <path d="M56 30C56 27 64 27 64 30C64 33 55 33 55 29" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M56 48C56 45 64 45 64 48C64 51 55 51 55 47" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M41 42C41 39 49 39 49 42" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M71 42C71 39 79 39 79 42" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <!-- Nơ ruy băng -->
+                    <path d="M50 85C42 80 42 92 50 88L60 86L70 88C78 92 78 80 70 85L60 86L50 85Z" fill="#FF4D6D"/>
+                    <circle cx="60" cy="86" r="4" fill="#C9184A"/>
+                </svg>
+            </div>
+
+            <div class="card-date-badge">💗 HAPPY WOMEN'S DAY 20/10 💗</div>
+            <h1 class="card-title">Gửi Trà iu của anh!</h1>
+
+            <!-- Nơi hiển thị lời chúc với hiệu ứng gõ chữ -->
+            <div class="card-message-box">
+                <span id="typewriter-text"></span><span class="cursor" id="cursor"></span>
+            </div>
+
+            <!-- Chữ ký cuối thư -->
+            <div class="card-signature" id="card-signature">
+                Yêu em thật nhiều ❤️
+            </div>
+
+            <!-- Nút tương tác chạy trốn -->
+            <div class="btn-container" id="btn-container">
+                <button class="gift-btn" id="runaway-btn">
+                    🎁 Click vào đây để nhận quà thực tế
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL QUÀ TẶNG THỰC TẾ (Hiện ra khi Trà bắt được nút) -->
+    <div class="modal-overlay" id="gift-modal">
+        <div class="modal-box">
+            <div class="modal-icon">💝</div>
+            <h2 class="modal-title">Giỏi quá! Bắt được quà rồi!</h2>
+            <!-- ==========================================================================
+                 8. ĐỔI NỘI DUNG PHẦN QUÀ THỰC TẾ TẠI ĐÂY
+                 ========================================================================== -->
+            <p class="modal-text">
+                Phần thưởng dành cho sự kiên nhẫn của <b>Trà iu</b> là:<br><br>
+                🌸 <b>1 buổi đi ăn món em thích</b><br>
+                🧋 <b>1 ly nước ngọt ngào full topping</b><br>
+                🤗 <b>Và 1000 cái ôm thật chặt từ anh!</b><br><br>
+                <i>(Chụp màn hình lại ngay để đòi quà anh nhé!)</i>
+            </p>
+            <button class="close-modal-btn" id="close-modal-btn">Yêu anh nhất! 🥰</button>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           9. CẤU HÌNH LỜI CHÚC & TỐC ĐỘ GÕ CHỮ TẠI ĐÂY
+           Bạn có thể sửa nội dung lời chúc trong biến MESSAGE bên dưới.
+           Ký tự \n dùng để xuống dòng.
+           ========================================================================== */
+        const MESSAGE = "Chúc Trà iu của anh có một ngày 20/10 thật vui vẻ, luôn xinh đẹp, rạng rỡ và tràn ngập hạnh phúc.\n\nCảm ơn em vì đã đến và luôn dịu dàng ở bên cạnh anh. Mỗi khoảnh khắc đi cùng em đều là những kỷ niệm thật đẹp. Chúc công chúa của anh ngày nào cũng cười tươi như hôm nay nhé! 🌸💕";
+        
+        const TYPING_SPEED = 45; // Tốc độ gõ chữ (mili-giây/ký tự - số càng nhỏ gõ càng nhanh)
+        const MAX_RUNAWAY_TIMES = 5; // Số lần nút chạy trốn trước khi chịu đứng yên cho bấm
+
+        // Các câu trêu chọc khi nút chạy trốn
+        const TEASE_TEXTS = [
+            "Ơ kìa, bắt hụt rồi nha! 😝",
+            "Nhanh tay lên Trà ơi! 🏃‍♂️💨",
+            "Quà xịn nên hơi khó bắt xíu~ 🤭",
+            "Cố lên em iu, sắp tóm được rồi! 💕",
+            "Thôi thương tình đứng yên cho bấm nè! 🥰"
+        ];
+
+        /* ==========================================================================
+           10. LOGIC XỬ LÝ HIỆU ỨNG CÁNH HOA HỒNG RƠI
+           ========================================================================== */
+        const petalsContainer = document.getElementById('petals-container');
+        const PETAL_COUNT = 28; // Số lượng cánh hoa trên màn hình
+
+        function createPetals() {
+            for (let i = 0; i < PETAL_COUNT; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+
+                // Kích thước ngẫu nhiên tạo chiều sâu
+                const size = Math.random() * 14 + 10; 
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size * 1.2}px`;
+
+                // Vị trí ngang ngẫu nhiên
+                petal.style.left = `${Math.random() * 100}vw`;
+
+                // Thời gian rơi và đung đưa ngẫu nhiên
+                const fallDuration = Math.random() * 7 + 6; // 6s - 13s
+                const swayDuration = Math.random() * 3 + 2; // 2s - 5s
+                const delay = Math.random() * 8;
+
+                petal.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
+                petal.style.animationDelay = `-${delay}s, -${delay}s`;
+
+                // Làm mờ nhẹ một số cánh hoa ở xa
+                if (size < 14) {
+                    petal.style.filter = 'blur(1px)';
+                    petal.style.opacity = '0.5';
+                }
+
+                petalsContainer.appendChild(petal);
+            }
+        }
+        createPetals();
+
+        /* ==========================================================================
+           11. LOGIC MỞ PHONG BÌ & HIỆU ỨNG GÕ CHỮ (TYPEWRITER)
+           ========================================================================== */
+        const envelopeTrigger = document.getElementById('envelope-trigger');
+        const greetingCard = document.getElementById('greeting-card');
+        const typewriterText = document.getElementById('typewriter-text');
+        const cursor = document.getElementById('cursor');
+        const cardSignature = document.getElementById('card-signature');
+        const btnContainer = document.getElementById('btn-container');
+        const bgMusic = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+
+        let isOpened = false;
+        let isMusicPlaying = false;
+
+        // Xử lý bật/tắt nhạc
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '🔇';
+            } else {
+                bgMusic.play().then(() => {
+                    musicBtn.classList.add('playing');
+                    musicBtn.innerHTML = '🎵';
+                }).catch(() => {
+                    // Trình duyệt chặn autoplay hoặc link nhạc lỗi
+                });
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        musicBtn.addEventListener('click', toggleMusic);
+
+        // Khi Trà chạm vào phong bì
+        envelopeTrigger.addEventListener('click', () => {
+            if (isOpened) return;
+            isOpened = true;
+
+            // Tự động bật nhạc nền nhẹ nhàng
+            if (!isMusicPlaying) {
+                toggleMusic();
+            }
+
+            // 1. Mở nắp phong bì
+            envelopeTrigger.classList.add('open');
+            document.getElementById('prompt-text').style.opacity = '0';
+            createHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
+
+            // 2. Thu nhỏ phong bì và hiện tấm thiệp lớn ra giữa màn hình
+            setTimeout(() => {
+                envelopeTrigger.classList.add('fade-out');
+                greetingCard.classList.add('active');
+
+                // 3. Bắt đầu gõ chữ sau khi tấm thiệp đã hiện ra
+                setTimeout(startTypewriter, 600);
+            }, 900);
+        });
+
+        let charIndex = 0;
+        function startTypewriter() {
+            if (charIndex < MESSAGE.length) {
+                typewriterText.textContent += MESSAGE.charAt(charIndex);
+                charIndex++;
+                setTimeout(startTypewriter, TYPING_SPEED);
+            } else {
+                // Gõ xong: Ẩn con trỏ, hiện chữ ký và nút nhận quà
+                cursor.style.display = 'none';
+                cardSignature.classList.add('show');
+                setTimeout(() => {
+                    btnContainer.classList.add('show');
+                }, 400);
+            }
+        }
+
+        /* ==========================================================================
+           12. LOGIC NÚT BẤM "CHẠY TRỐN" VUI NHỘN (HỖ TRỢ CẢ CHUỘT & CẢM ỨNG)
+           ========================================================================== */
+        const runawayBtn = document.getElementById('runaway-btn');
+        const giftModal = document.getElementById('gift-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        let dodgeCount = 0;
+
+        function moveButton(e) {
+            if (dodgeCount >= MAX_RUNAWAY_TIMES) {
+                return; // Đã chạy đủ số lần, đứng yên cho Trà bấm!
+            }
+
+            // Ngăn sự kiện click mặc định trên điện thoại khi nút đang chạy
+            if (e && e.type === 'touchstart') {
+                e.preventDefault();
+            }
+
+            const btnRect = runawayBtn.getBoundingClientRect();
+            const padding = 24; // Khoảng cách an toàn với mép màn hình
+
+            // Tính toán giới hạn tọa độ trong màn hình
+            const maxX = window.innerWidth - btnRect.width - padding;
+            const maxY = window.innerHeight - btnRect.height - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            // Chuyển nút sang vị trí fixed để bay khắp màn hình
+            runawayBtn.style.position = 'fixed';
+            runawayBtn.style.left = `${randomX}px`;
+            runawayBtn.style.top = `${randomY}px`;
+
+            // Đổi câu chữ trêu chọc tương ứng
+            runawayBtn.textContent = TEASE_TEXTS[dodgeCount];
+            dodgeCount++;
+        }
+
+        // Bắt sự kiện di chuột trên máy tính và chạm tay trên điện thoại
+        runawayBtn.addEventListener('mouseover', moveButton);
+        runawayBtn.addEventListener('touchstart', moveButton, { passive: false });
+
+        // Khi Trà bắt được và click vào nút
+        runawayBtn.addEventListener('click', () => {
+            if (dodgeCount < MAX_RUNAWAY_TIMES) {
+                moveButton();
+                return;
+            }
+            createHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
+            giftModal.classList.add('show');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            giftModal.classList.remove('show');
+            createHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
+        });
+
+        /* ==========================================================================
+           13. HIỆU ỨNG PHÁO GIẤY TRÁI TIM BÙNG NỔ KHI MỞ THƯ & NHẬN QUÀ
+           ========================================================================== */
+        function createHeartBurst(x, y) {
+            const hearts = ['❤️', '💖', '💕', '🌸', '✨'];
+            for (let i = 0; i < 22; i++) {
+                const particle = document.createElement('span');
+                particle.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                particle.style.position = 'fixed';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.fontSize = `${Math.random() * 16 + 14}px`;
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '999';
+                particle.style.transition = 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
+                document.body.appendChild(particle);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 160 + 50;
+                const destX = Math.cos(angle) * distance;
+                const destY = Math.sin(angle) * distance - 40;
+
+                requestAnimationFrame(() => {
+                    particle.style.transform = `translate(${destX}px, ${destY}px) scale(0.4) rotate(${Math.random() * 90 - 45}deg)`;
+                    particle.style.opacity = '0';
+                });
+
+                setTimeout(() => particle.remove(), 1200);
+            }
+        }
+    </script>
+</body>
+</html>
